@@ -197,6 +197,9 @@ function isFail() {
 function stopGame() {
     document.removeEventListener("keydown", onKeyDown);
     app.ticker.remove(update, this);
+    buttonRight.off('pointerdown');
+    buttonLeft.off('pointerdown');
+    buttonShot.off('pointerdown');
 
     scoreText.text = "Score: " + score + " Game Over";
 }
