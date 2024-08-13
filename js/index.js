@@ -18,9 +18,9 @@ const app = new PIXI.Application({
 const scoreText = new PIXI.Text("Score: 0", { fill: COLOR, fontSize: 16 });
 const restartText = new PIXI.Text("Restart", { fill: COLOR, fontSize: 16 });
 
-const buttonLeft = new PIXI.Text("⬅", { fill: COLOR, fontSize: 44 });
-const buttonRight = new PIXI.Text("⮕", { fill: COLOR, fontSize: 44 });
-const buttonShot = new PIXI.Text("⤫", { fill: COLOR, fontSize: 44 });
+const buttonLeft = new PIXI.Text("⭠", { fill: COLOR, fontSize: 34 });
+const buttonRight = new PIXI.Text("⭢", { fill: COLOR, fontSize: 34 });
+const buttonShot = new PIXI.Text("⤫", { fill: COLOR, fontSize: 34 });
 
 const hero = drawPixel(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 4 * PIXEL_SIZE, COLOR_HERO);
 
