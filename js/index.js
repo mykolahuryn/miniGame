@@ -50,7 +50,7 @@ buttonLeft.y = SCREEN_HEIGHT - buttonLeft.width - 10;
 buttonRight.x = SCREEN_WIDTH - buttonRight.width - 10;
 buttonRight.y = SCREEN_HEIGHT - buttonLeft.width - 10;
 
-buttonShot.x = SCREEN_WIDTH / 2 - 7;
+buttonShot.x = SCREEN_WIDTH / 2 - 4;
 buttonShot.y = SCREEN_HEIGHT - 3 * PIXEL_SIZE;
 
 restartText.interactive = true;
