@@ -18,7 +18,11 @@ const app = new PIXI.Application({
 const scoreText = new PIXI.Text("Score: 0", { fill: COLOR, fontSize: 16 });
 const restartText = new PIXI.Text("Restart", { fill: COLOR, fontSize: 16 });
 
-const hero = drawPixel(SCREEN_WIDTH / 2, SCREEN_HEIGHT - PIXEL_SIZE, COLOR_HERO);
+const buttonLeft = new PIXI.Text("⬅", { fill: COLOR, fontSize: 44 });
+const buttonRight = new PIXI.Text("⮕", { fill: COLOR, fontSize: 44 });
+const buttonShot = new PIXI.Text("⤫", { fill: COLOR, fontSize: 44 });
+
+const hero = drawPixel(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 4 * PIXEL_SIZE, COLOR_HERO);
 
 let bullets = [];
 let enemies = [];
@@ -30,13 +34,82 @@ document.addEventListener("keydown", onKeyDown);
 app.ticker.add(update);
 app.stage.addChild(scoreText);
 app.stage.addChild(restartText);
+app.stage.addChild(buttonLeft);
+app.stage.addChild(buttonRight);
+app.stage.addChild(buttonShot);
 
 restartText.x = SCREEN_WIDTH - restartText.width - 10;
-restartText.y = 0;
+restartText.y = 10;
+
+scoreText.x = 10;
+scoreText.y = 10;
+
+buttonLeft.x = 10;
+buttonLeft.y = SCREEN_HEIGHT - buttonLeft.width - 10;
+
+buttonRight.x = SCREEN_WIDTH - buttonRight.width - 10;
+buttonRight.y = SCREEN_HEIGHT - buttonLeft.width - 10;
+
+buttonShot.x = SCREEN_WIDTH / 2 - 7;
+buttonShot.y = SCREEN_HEIGHT - 3 * PIXEL_SIZE;
+
 restartText.interactive = true;
 restartText.buttonMode = true;
 
+buttonLeft.interactive = true;
+buttonLeft.buttonMode = true;
+
+buttonRight.interactive = true;
+buttonRight.buttonMode = true;
+
+buttonShot.interactive = true;
+buttonShot.buttonMode = true;
+
+function handleArrowLeft() {
+    if (hero.x > 0) {
+        hero.x -= PIXEL_SIZE;
+    }
+}
+
+function handleArrowRight() {
+    if (hero.x < SCREEN_WIDTH - PIXEL_SIZE) {
+        hero.x += PIXEL_SIZE;
+    }
+}
+
+function handleShot() {
+    let bullet = drawPixel(hero.x, hero.y);
+    bullet.isDead = false;
+    bullets.push(bullet);
+}
+
+buttonLeft.on('pointerdown', () => {
+    handleArrowLeft();
+});
+
+buttonRight.on('pointerdown', () => {
+    handleArrowRight();
+});
+
+buttonShot.on('pointerdown', () => {
+    handleShot();
+});
+
+addHorizontalLine(SCREEN_HEIGHT - 3 * PIXEL_SIZE)
+
 restartText.on('pointerdown', restartGame);
+
+function addHorizontalLine(y, color = 0x000000, thickness = 1) {
+    const line = new PIXI.Graphics();
+ 
+    line.lineStyle(thickness, color); 
+    line.moveTo(0, y);
+    line.lineTo(SCREEN_WIDTH, y);
+    
+    app.stage.addChild(line);
+    
+    return line;
+}
 
 function onKeyDown(key) {
     switch (key.key) {
@@ -53,21 +126,7 @@ function onKeyDown(key) {
             }
             break;
         }
-
-        case "ArrowDown": {
-            if (hero.y < SCREEN_HEIGHT - PIXEL_SIZE) {
-                hero.y += PIXEL_SIZE;
-            }
-            break;
-        }
-
-        case "ArrowUp": {
-            if (hero.y > 0) {
-                hero.y -= PIXEL_SIZE;
-            }
-            break;
-        }
-
+        
         case " ": {
             let bullet = drawPixel(hero.x, hero.y);
             bullet.isDead = false;
@@ -154,7 +213,7 @@ function restartGame() {
     counter = 0;
 
     hero.x = SCREEN_WIDTH / 2;
-    hero.y = SCREEN_HEIGHT - PIXEL_SIZE;
+    hero.y = SCREEN_HEIGHT - 4 * PIXEL_SIZE;
     
     document.addEventListener("keydown", onKeyDown);
     app.ticker.add(update);
